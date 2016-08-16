@@ -3,7 +3,7 @@
 \usepackage{upgreek}
 %\usepackage[none]{hyphenat}
 \usepackage{graphicx}
-%\graphicspath{ {C:/Inetpub/wwwroot/ISB/data/iPRG2016/} }
+\graphicspath{ {C:/Inetpub/wwwroot/ISB/data/iPRG2016/} }
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
@@ -25,7 +25,7 @@
 Thank you for participating in this year's Proteome Informatics Research Group (iPRG) study. This letter provides the instructions needed to access the data files, complete your analysis, and submit your results. Results returned by \textbf{Friday, September 30, 2016} will be included in the iPRG presentation at the next Annual ABRF Meeting, March 25-28, 2017.
 
 \subsection*{Overview}
-This study of bottom-up proteomics LC-MS/MS data analysis focuses on the identification and false-discovery rate (FDR) estimation of proteins, or more specifically, proteoforms (Smith et. al. 2013). In this study, we have acquired data from four samples prepared by spiking different combination of partially overlapping oligopeptides recombinantly expressed in the bacterium \textit{Escherichia coli} (Figure 1) into a common background. These oligos are here referred to as Protein Epitope Signature Tags (PrESTs, Figure 2) and mimic protein homologs for the purpose of this study. Three technical replicate runs of each sample were acquired in random order. The goal of the study is to compare methods for inferring and estimating the confidence of proteoform assignments in each of the samples. The participants are free to use any peptide and protein identification software, or a combination of several search engines. The participants are also free to use MS1 or MS2 data, or both. \clearpage
+This study of bottom-up proteomics LC-MS/MS data analysis focuses on the identification and \href{https://en.wikipedia.org/wiki/False_discovery_rate}{false-discovery rate} (FDR) estimation of proteins, or more specifically, proteoforms (Smith et. al. 2013). In this study, we have acquired data from four samples prepared by spiking different combination of partially overlapping oligopeptides recombinantly expressed in the bacterium \textit{Escherichia coli} (Figure 1) into a common background. These oligos are here referred to as Protein Epitope Signature Tags (PrESTs, Figure 2) and mimic protein homologs for the purpose of this study. Three technical replicate runs of each sample were acquired in random order. The goal of the study is to compare methods for inferring and estimating the confidence of proteoform assignments in each of the samples. The participants are free to use any peptide and protein identification software, or a combination of several search engines. The participants are also free to use MS1 or MS2 data, or both. \clearpage
 \begin{figure}[h]
 \includegraphics[width=13cm]{Figure_1}
 \centering
@@ -65,14 +65,15 @@ Three files should be uploaded with each submission:\\
 
 File 1: an R Markdown document or IPython notebook containing the analysis and explaining what was done. Alternatively, a free-text description of what was done can be provided as an ASCII .txt file instead. Anonymized Markdowns and notebooks will be shared under the Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0) license on the ABRF iPRG website.\\
 
-File 2:  a tab-delimited table containing a data matrix with probabilities of presence (see appendix) for each identified proteoform, with each row containing one HPRR proteform and each of 12 columns the FDRs/$q$~values for one of the samples. The first row shoul be a header row, with its first element being either ``FDR'' or ``PEP'' depending on what type of error measure that is used in the report. This should be followed by the sample names ``A1'', ``A2'', \ldots, ``D3''.For the subsequent rows the first column should contain the PrEST accession. The spreadsheet format will be validated during submission. The file created by the example Markdown/notebooks already conform to this format.\\
+File 2:  a tab-delimited table containing a data matrix with probabilities of presence (see appendix) for each identified proteoform, with each row containing one HPRR proteform and each of 12 columns the FDRs/PEPs for one of the samples. The first row should be a header row, with its first element being either ``FDR'' or ``PEP'' depending on what type of error measure that is used in the report (``FDR'' for $q$~values, ``PEP'' for posterior error probabilities). This should be followed by the sample names ``A1'', ``A2'', \ldots, ``D3''. For the subsequent rows the first column should contain the PrEST accession. The spreadsheet format will be validated during submission. The file created by the example Markdown/notebooks already conform to this format.\\
 
 File 3: a file with the answers to the short survey.\\
 
 Participants are welcome to submit up to five proposed solutions to the study. Each submission will generate a random key that the participant can use to compare how they did relative to other submissions. All results will be reported anonymously.
 
-You may update a submission by entering your random identifier on the submission web-form. This will version your answers; only your most recent results will be used in the community-wide comparison. 
-\clearpage
+You may update a submission by entering your random identifier on the submission web-form. This will version your answers; only your most recent results will be used in the community-wide comparison. \\
+\\
+
 \textbf{Important note to vendors and commercial laboratories:} ABRF imposes strict guidelines on the use of study results for marketing purposes. These guidelines are described in \url{https://abrf.org/sites/default/files/temp/Resources/research_group_study_participation_guidelines_2010.pdf}.
 
 \subsection*{Questions?}
