@@ -1,8 +1,6 @@
 
 # coding: utf-8
 
-# In[20]:
-
 import sys
 import getopt
 import os
@@ -33,7 +31,7 @@ def getAllProteinNames(fastaFile):
 
 def checkHeader(fields):
     if not len(fields)==13:
-        raise WrongFormat(("Wong number of values in header (%i values)." % len(fields)),fields)
+        raise WrongFormat(("Wrong number of values in header (%i values)." % len(fields)),fields)
     if (not fields[0]=="FDR") and (not fields[0]=="PEP"):
         raise WrongFormat(("Header wrongly formated. Field 0 should either be PEP or FDR, it is currently given as \"%s\"."%fields[0]),fields)
     for sample in ['A','B','C','D']:
@@ -44,7 +42,7 @@ def checkHeader(fields):
 
 def checkRow(fields,names):
     if not len(fields)==13:
-        raise WrongFormat("Wong number of cells in row.", fields)
+        raise WrongFormat("Wrong number of cells in row.", fields)
     if not fields[0] in names:
         raise WrongFormat("Protein name %s not recognized" % fields[0], fields)
     for field in fields[1:]:
@@ -57,26 +55,48 @@ def checkRow(fields,names):
             
 def checkFile(resultFile="my_resultFile.txt",fastaFile="iPRG2016.fasta"):
     names = getAllProteinNames(fastaFile)
-    with open(resultFile,"r") as inFile:
+    with open(resultFile,"r") if resultFile != None else sys.stdin as inFile:
         csvReader = csv.reader(inFile, delimiter = '\t',quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
         checkHeader(csvReader.next())
         for fields in csvReader:
             checkRow(fields,names)
 
+def usage():
+    print >>sys.stderr, """Usage: script.py [options]
 
+Options:
+  -h, --help                   Show this message, and quit
+  -i FILE, --test-file=FILE    The file to test, defaults to my_resultFile.txt
+  -s                           Read the file to test from stdin, instead as from a file
+  -f FILE, --fasta-file=FILE   The FASTA database that was searched, defaults to iPRG2016.fasta
+"""
+            
 def main(argv=None):
+    testFile, fastaFile ="my_resultFile.txt", "iPRG2016.fasta"
     if argv is None:
         argv = sys.argv
     try:
         try:
-            opts, args = getopt.getopt(argv[1:], "hi:f:", ["help","test-file","fasta-file"])
+            opts, args = getopt.getopt(argv[1:], "hsi:f:", ["help","stdin","test-file","fasta-file"])
         except getopt.error, msg:
              raise Usage(msg)
-        checkFile()
-        return
+        for o,a in opts:
+            if o in ("-h", "--help"):
+                usage()
+                return 1
+            elif o in ("-i", "--test-file"):
+                testFile = a
+            elif o in ("-s", "--stdin"):
+                testFile = None
+            elif o in ("-f", "--fasta-file"):
+                fastaFile = a
+            else:
+                assert False, "Unhandled exception"
+        checkFile(testFile, fastaFile)
+        return 0
     except WrongFormat, err:
         print >>sys.stderr, err.msg
-        print >>sys.stderr, " ".join(err.fields)
+        print >>sys.stderr, err.fields
         return 3
     except Usage, err:
         print >>sys.stderr, err.msg
@@ -84,18 +104,9 @@ def main(argv=None):
         return 2
 
 if __name__ == "__main__":
-    sys.exit(main())
-
-                
+    main(sys.argv)
 
 
-
-# In[21]:
-
-main(["./my_resultFile.txt"])
-
-
-# In[ ]:
 
 
 
