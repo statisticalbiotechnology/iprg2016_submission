@@ -57,7 +57,11 @@ def checkFile(resultFile="my_resultFile.txt",fastaFile="iPRG2016.fasta"):
     names = getAllProteinNames(fastaFile)
     with open(resultFile,"r") if resultFile != None else sys.stdin as inFile:
         csvReader = csv.reader(inFile, delimiter = '\t',quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
-        checkHeader(csvReader.next())
+        try:
+            header=csvReader.next()
+        except ValueError:
+            raise WrongFormat("Could not interpret the header",[])
+        checkHeader(header)
         for fields in csvReader:
             checkRow(fields,names)
 
@@ -104,9 +108,4 @@ def main(argv=None):
         return 2
 
 if __name__ == "__main__":
-    main(sys.argv)
-
-
-
-
-
+    main(["script","-h"])
